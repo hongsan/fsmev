@@ -1,7 +1,6 @@
 #ifndef BLINK_COMMAND_H
 #define BLINK_COMMAND_H
 
-
 namespace blink
 {
 enum Command
