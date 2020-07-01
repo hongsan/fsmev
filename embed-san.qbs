@@ -14,5 +14,6 @@ Project
         "core/core.qbs",
         "uart/uart.qbs",
         "blink/blink.qbs",
+        "console/console.qbs",
     ]
 }
