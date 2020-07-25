@@ -24,45 +24,19 @@ public:
     Task* registerTask(Event e);
     Task* getTask(Event e);
     void tick(); /*must be called in timer interrupt or SysTick interrupt, 1ms usually*/
+    void lock(){locking_ = true;}
+    void unlock(){locking_ = false;}
 private:
     Engine();
     Event events_[EVENT_QUEUE_SIZE];
-    Event* first_;
-    Event* last_;
-    Event* inPtr_;
-    Event* outPtr_;
-
+    volatile Event* first_;
+    volatile Event* last_;
+    volatile Event* inPtr_;
+    volatile Event* outPtr_;
+    volatile bool locking_ = false;
     Task* tasks_ = nullptr;
 };
 
-}
-
-inline void core::Engine::run()
-{
-    while (true)
-    {
-        if (outPtr_ == inPtr_)
-        {
-            WAIT_FOR_INTERUPT; //sleep
-        }
-        else
-        {
-            Event e = *outPtr_;
-            outPtr_++;
-            if (outPtr_ == last_) outPtr_ = first_;
-            if (e != nullptr) (*e)();
-        }
-    }
-}
-
-inline void core::Engine::tick()
-{
-    Task* it = tasks_;
-    while (it!=nullptr)
-    {
-        it->tick();
-        it = it->next;
-    }
 }
 
 #endif // ENGINE_H

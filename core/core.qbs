@@ -7,6 +7,12 @@ StaticLibrary
     Depends { name:"stm32f1"}
     Depends { name:"mdk"}
 
+    Export
+    {
+        Depends { name:"cpp"}
+        cpp.includePaths:[product.sourceDirectory]
+    }
+
     cpp.includePaths:
     [
         product.sourceDirectory

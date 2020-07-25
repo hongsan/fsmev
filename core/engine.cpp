@@ -9,10 +9,38 @@ core::Engine::Engine()
     outPtr_ = first_;
 }
 
+void core::Engine::run()
+{
+    while (1)
+    {
+        if (locking_ || (outPtr_ == inPtr_))
+        {
+            WAIT_FOR_INTERUPT; //sleep
+        }
+        else
+        {
+            Event e = *outPtr_;
+            outPtr_++;
+            if (outPtr_ == last_) outPtr_ = first_;
+            if (e != nullptr) (*e)();
+        }
+    }
+}
+
+void core::Engine::tick()
+{
+    Task* it = tasks_;
+    while (it!=nullptr)
+    {
+        it->tick();
+        it = it->next;
+    }
+}
+
 void core::Engine::post(core::Event e)
 {
     DISABLE_INTERRUPT;
-    Event* next = inPtr_ + 1;
+    volatile Event* next = inPtr_ + 1;
     if (next == last_) next = first_;
 
     if (next!=outPtr_) //queue not full
@@ -46,4 +74,3 @@ core::Task* core::Engine::getTask(Event e)
     }
     return nullptr;
 }
-

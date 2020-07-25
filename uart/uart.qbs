@@ -8,10 +8,17 @@ StaticLibrary
     Depends { name:"mdk"}
     Depends { name:"core"}
 
+    Export
+    {
+        Depends { name:"cpp"}
+        cpp.includePaths:[product.sourceDirectory]
+    }
+
     cpp.includePaths:
     [
         project.sourceDirectory,
     ]
+
     cpp.cxxLanguageVersion: "c++11"
 
     files:

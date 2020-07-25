@@ -7,5 +7,5 @@
 #define ENABLE_INTERRUPT    __enable_irq()
 #define WAIT_FOR_INTERUPT   __WFI()
 
-#define EVENT_QUEUE_SIZE 128
+#define EVENT_QUEUE_SIZE 256
 #endif // CONFIG_H

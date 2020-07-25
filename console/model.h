@@ -4,7 +4,6 @@
 #include "core/engine.h"
 #include "uart/controller.h"
 
-
 namespace console
 {
     enum ItemType{SECTION = 1, VARIABLE, ACTION};

@@ -10,7 +10,7 @@
 #include "command.h"
 #include "stm32f1.h"
 
-#define TX_BUF_SIZE   512
+#define TX_BUF_SIZE   2048
 
 COMPONENT(uart, Controller)
     M_EVENT(receiveHeader);

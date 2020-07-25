@@ -10,11 +10,11 @@ extern "C" void USART1_IRQHandler(void)
         USART1->SR &= ~USART_SR_RXNE;
         uart::Controller::instance().nextReceiveEvent();
     }
-    else if(USART1->SR & USART_SR_TC)
-    {
-        USART1->SR &= ~USART_SR_TC;
-        M_EVENT_POST(uart::Controller, send);
-    }
+//    else if(USART1->SR & USART_SR_TC)
+//    {
+//        USART1->SR &= ~USART_SR_TC;
+//        M_EVENT_POST(uart::Controller, send);
+//    }
 }
 
 void uart::Controller::initUART_()
@@ -48,7 +48,7 @@ void uart::Controller::initUART_()
     // When OVER8 = 0, BRR [3:0] = USARTDIV [3:0]
     // USART1->BRR = (uint16_t)(0x01A0);
 
-    USART1->BRR = (uint16_t)(0x0270);//72 115200
+    //USART1->BRR = (uint16_t)(0x0270);//72 115200
     //USART1->BRR = (uint16_t)(0x1D4C);//72 9600
     //USART1->BRR = (uint16_t)(0x0230);//64 115200
     //USART1->BRR = (uint16_t)(0x1380);//48 9600
@@ -57,14 +57,14 @@ void uart::Controller::initUART_()
     //USART1->BRR = (uint16_t)(0x787);//36 115200
     //USART1->BRR = (uint16_t)(0xEA0);//36 9600
     //USART1->BRR = (uint16_t)(0x1380);//48 9600
-    //USART1->BRR = (uint16_t)(0x01A0);//48 115200
+    USART1->BRR = (uint16_t)(0x01A0);//48 115200
 
     // USART enable
     // Receiver enable
     // Transmitter enable
     USART1->CR1 = (uint32_t)(USART_CR1_UE | USART_CR1_RE | USART_CR1_TE);
     USART1->CR1 |= USART_CR1_RXNEIE;
-    USART1->CR1 |= USART_CR1_TCIE; //Transmission Complete Interrupt
+    //USART1->CR1 |= USART_CR1_TCIE; //Transmission Complete Interrupt
 
     // Default value
     USART1->CR2 = (uint32_t)(0x00000000);

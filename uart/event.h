@@ -80,6 +80,7 @@ inline M_EVENT_HANDLER(uart::Controller,send)
         return;
     }
     if (UART_TX_READY) UART_WRITE(txQueue_.pop());
+    M_EVENT_POST(uart::Controller,send);
 }
 
 #endif // EVENT_H
